@@ -1,5 +1,6 @@
+using Dog.States;
+using UnityEngine;
 using UnityHFSM;
-
 /* 
 DOG MANAGER CLASS PURPOSE: manage the overall logic for the dog
 -Create instance of StateMachine

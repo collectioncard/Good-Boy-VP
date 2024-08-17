@@ -1,26 +1,28 @@
+using UnityEngine;
 using UnityHFSM;
 
-public class HungryState : StateBase
+namespace Dog.States
 {
-    private DogState dogState;
-
-    public HungryState(DogState state)
+    public class HungryState : StateBase
     {
-        this.dogState = state;
-    }
+        public HungryState(DogState state) : base(needsExitTime: false, isGhostState: false)
+        {
+            
+        }
 
-    public override void Enter()
-    {
-        Debug.Log("Dog is hungry.");
-    }
+        public override void OnEnter()
+        {
+            Debug.Log("Dog is hungry.");
+        }
 
-    public override void Execute()
-    {
-        // ??
-    }
+        public override void OnLogic()
+        {
+            Debug.Log("The state is supposed to be doing something right now.");
+        }
 
-    public override void Exit()
-    {
-        Debug.Log("Exiting Hungry State.");
+        public override void OnExit()
+        {
+            Debug.Log("Exiting Hungry State.");
+        }
     }
 }

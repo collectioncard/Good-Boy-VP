@@ -1,26 +1,30 @@
+using UnityEngine;
 using UnityHFSM;
 
-public class IdleState : StateBase
+namespace Dog.States
 {
-    private DogState dogState;
-
-    public IdleState(DogState state)
+    public class IdleState : StateBase
     {
-        this.dogState = state;
-    }
+        private DogState dogState;
+        
+        public IdleState(DogState state) : base(needsExitTime: false, isGhostState: false)
+        {
+            this.dogState = state;
+        }
 
-    public override void Enter()
-    {
-        Debug.Log("Dog is idle.");
-    }
+        public override void OnEnter()
+        {
+            Debug.Log("Dog is idle.");
+        }
 
-    public override void Execute()
-    {
-        // display idle pic ?
-    }
+        public override void OnLogic()
+        {
+            // display idle pic ?
+        }
 
-    public override void Exit()
-    {
-        Debug.Log("Exiting Idle State.");
+        public override void OnExit()
+        {
+            Debug.Log("Exiting Idle State.");
+        }
     }
 }
