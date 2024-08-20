@@ -20,14 +20,19 @@ public class DogManager : MonoBehaviour
 
         var idleState = new IdleState(dogState);
         var hungryState = new HungryState(dogState);
+        var sickState = new SickState(dogState);
 
         fsm.AddState("Idle", idleState);
         fsm.AddState("Hungry", hungryState);
+        fsm.AddState("Sick", sickState);
 
         fsm.SetStartState("Idle");
         // If hunger level over 50, then dog will enter hungry state
         fsm.AddTransition("Idle", "Hungry", t => dogState.HungerLevel > 50);
         fsm.AddTransition("Hungry", "Idle", t => dogState.HungerLevel <= 50);
+        
+        fsm.AddTransition("Idle", "Sick", t => dogState.IsSick || dogState.Health < 20);
+        fsm.AddTransition("Sick", "Idle", t => !dogState.IsSick && dogState.Health >= 20);
 
         fsm.Init();
     }
