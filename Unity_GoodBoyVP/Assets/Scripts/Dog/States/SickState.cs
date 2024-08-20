@@ -12,7 +12,7 @@ namespace Dog.States
             this.dogState = state;
         }
 
-        public override void OnEnterEnter()
+        public override void OnEnter()
         {
             Debug.Log("Dog is now sick.");
         }
