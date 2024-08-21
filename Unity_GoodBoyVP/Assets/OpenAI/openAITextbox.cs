@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using OpenAI.ApiTemplates.Response;
+using TMPro;
 using UnityEngine;
 
 namespace OpenAI
@@ -20,7 +21,8 @@ namespace OpenAI
         {
             if (!string.IsNullOrEmpty(userInput))
             {
-                string aiResult = await openAPI.handleUserInput(userInput);
+                ActionResponseTemplate apiResponse = await openAPI.handleUserInput(userInput, "text");
+                string aiResult = apiResponse.choices[0].message.content;
                 Debug.Log("AI was sent: " + userInput + "\nAI returned: " + aiResult);
                 
                 //TODO: Just replace the text box content with the response for now. This should eventually go to the output box.

@@ -2,15 +2,17 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using OpenAI.ApiTemplates;
+using OpenAI.ApiTemplates.Requests;
+using OpenAI.ApiTemplates.Response;
 using UnityEngine;
+using Message = OpenAI.ApiTemplates.Requests.Message;
 
 public class OpenAIClient : MonoBehaviour
 {
    private static readonly HttpClient client = new HttpClient();
    private string openAiKey = "Put the API key here. Don't push it to the repo or else!";
 
-   public async Task<string> handleUserInput(string input)
+   public async Task<ActionResponseTemplate> handleUserInput(string input, string outputType)
    {
       Message systemMessage = createMessage("system",
          "You are a virtual pet. You will receive the dog state and you are to determine how to continue based on the state and the user prompt. Respond only with the new dog state.");
@@ -21,6 +23,8 @@ public class OpenAIClient : MonoBehaviour
       {
          messages = new List<Message> { systemMessage, userMessage }
       };
+
+      requestBody.response_format.type = outputType;
       
       
 
@@ -29,13 +33,16 @@ public class OpenAIClient : MonoBehaviour
       client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", openAiKey);
 
       var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-      var response = await client.PostAsync("https://api.openai.com/v1/completions", content);
+      Debug.Log(content);
+      var response = await client.PostAsync("https://api.openai.com/v1/chat/completions", content);
       var responseString = await response.Content.ReadAsStringAsync();
+      Debug.Log(responseString);
 
-      // TODO: Convert this into a json response instead of a string
+      //convert the response back into an object
+      ActionResponseTemplate apiResponse = new ActionResponseTemplate();
 
-      return responseString;
-
+      apiResponse = JsonUtility.FromJson<ActionResponseTemplate>(responseString);
+      return apiResponse;
    }
 
    private static Message createMessage(string role, string text)
