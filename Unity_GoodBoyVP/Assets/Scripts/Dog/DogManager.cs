@@ -45,7 +45,8 @@ public class DogManager : MonoBehaviour
         fsm.AddState("Sleepy", sleepyState);
 
         fsm.SetStartState("Idle");
-        
+
+        //Please add any new transitions to the list down below too. Thanks!
         fsm.AddTransition("Idle", "Hungry", t => dogState.HungerLevel >= 75);
         fsm.AddTransition("Idle", "Sleepy", t => dogState.IsSleeping == true); 
         fsm.AddTransition("Idle", "Sick", t => dogState.IsSick == true);
@@ -191,4 +192,36 @@ public class DogManager : MonoBehaviour
         }
         //Debug.Log("Dog's TiredLevel decreased: " + dogState.TiredLevel);
     }
+
+
+    /**
+     * Returns the instance of the DogState object that the state machine uses to make decisions.
+     * Any modifications to this will change logic so be careful. 
+     */
+    public DogState getDogState()
+    {
+        return dogState;
+    }
+
+    /**
+     * Returns a string array of all valid transitions from the current state.
+     *
+     * This is made manually because there doesn't seem to be a way to get the transitions from the state machine. (Kinda annoying ngl)
+     */
+    public string getValidTransitions()
+    {
+        //Get the current state from the machine
+        string currentState = fsm.ActiveState.name;
+
+        return currentState switch
+        {
+            "Idle" => "Hungry, Sleepy, Sick",
+            "Hungry" => "Idle, Sleepy, Sick",
+            "Sick" => "Idle, Sleepy",
+            "Sleepy" =>  "Idle",
+            _ => "Idle"
+        };
+    }
+
+    
 }

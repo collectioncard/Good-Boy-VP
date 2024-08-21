@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -12,16 +13,30 @@ public class OpenAIClient : MonoBehaviour
    private static readonly HttpClient client = new HttpClient();
    private string openAiKey = "Put the API key here. Don't push it to the repo or else!";
 
+   private DogManager dogManager;
+
+
+   void Start()
+   {
+      dogManager = GameObject.Find("HFSMObject")?.GetComponent<DogManager>();
+      if (dogManager == null)
+      {
+         Debug.LogError("DogManager component not found on HFSMObject.");
+      }
+   }
+
    public async Task<ActionResponseTemplate> handleUserInput(string input, string outputType)
    {
       Message systemMessage = createMessage("system",
-         "You are a virtual pet. You will receive the dog state and you are to determine how to continue based on the state and the user prompt. Respond only with the new dog state.");
+         "You are a virtual pet dog. A user can interact with you by typing commands. Your job is to take the dog's status, current state, valid state transitions, and user input, and respond accordingly. If the user asks for something or gives a command that makes no sense, respond with 'the dog looks at you with confusion' but do so sparingly and always try to accommodate a request. Otherwise, respond with an appropriate message along with a state change from the valid list if desired.");
+
+      Message statusMessage = getDogStatusMessage(dogManager);
 
       Message userMessage = createMessage("user", input);
 
       ActionRequestTemplate requestBody = new ActionRequestTemplate
       {
-         messages = new List<Message> { systemMessage, userMessage }
+         messages = new List<Message> { systemMessage, statusMessage, userMessage }
       };
 
       requestBody.response_format.type = outputType;
@@ -60,6 +75,21 @@ public class OpenAIClient : MonoBehaviour
          }
       };
       return message;
+   }
+
+   private static Message getDogStatusMessage(DogManager dogManager)
+   {
+      DogState dogState = dogManager.getDogState();
+
+      StringBuilder stateString = new StringBuilder();
+
+      stateString.Append("Dog Hunger Level:").Append(dogState.HungerLevel)
+         .Append("\nDog Health Level:").Append(dogState.Health)
+         .Append("\nDog Happiness Level:").Append(dogState.Happiness)
+         .Append("\nDog Is Currently Sick: ").Append(dogState.IsSick)
+         .Append("\nValid state transitions:").Append(dogManager.getValidTransitions());
+
+      return createMessage("system", stateString.ToString());
    }
    
    
