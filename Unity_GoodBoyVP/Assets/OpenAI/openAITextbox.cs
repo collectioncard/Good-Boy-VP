@@ -1,4 +1,5 @@
-﻿using OpenAI.ApiTemplates.Response;
+﻿using Newtonsoft.Json;
+using OpenAI.ApiTemplates.Response;
 using TMPro;
 using UnityEngine;
 
@@ -21,12 +22,10 @@ namespace OpenAI
         {
             if (!string.IsNullOrEmpty(userInput))
             {
-                ActionResponseTemplate apiResponse = await openAPI.handleUserInput(userInput, "text");
-                string aiResult = apiResponse.choices[0].message.content;
-                Debug.Log("AI was sent: " + userInput + "\nAI returned: " + aiResult);
+                StructuredOutput apiResponse = await openAPI.handleUserInput(userInput, "text");
                 
-                //TODO: Just replace the text box content with the response for now. This should eventually go to the output box.
-                inputField.text = aiResult;
+                //TODO: Change the dog's state
+                inputField.text = apiResponse.DogActionDescription;
             }
         }
     }

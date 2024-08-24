@@ -15,6 +15,7 @@ namespace OpenAI.ApiTemplates.Requests
         public int presence_penalty = 0;
         //public List<Tool> tools = new List<Tool>(); TODO: Implement if we want
         public ResponseFormat response_format = new ResponseFormat();
+        public bool strict = true;
     }
 
     [Serializable]
@@ -43,6 +44,7 @@ namespace OpenAI.ApiTemplates.Requests
     public class ResponseFormat
     {
         public string type;
+        public Dictionary<string, object> json_schema = new Dictionary<string, object>();
     }
 
     [Serializable]
