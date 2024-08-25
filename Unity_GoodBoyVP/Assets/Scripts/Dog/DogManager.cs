@@ -76,14 +76,15 @@ public class DogManager : MonoBehaviour
         // Calculate the time difference since the game started
         double elapsedTime = (DateTime.Now - startTime).TotalSeconds;
 
-        // Check if the elapsed time is a multiple of 5 for Hunger
-        if (Math.Floor(elapsedTime / 1) > Math.Floor((elapsedTime - Time.deltaTime) / 1))
+        
+        // Check if the elapsed time is a multiple of 100 for Hunger
+        if (Math.Floor(elapsedTime / 100) > Math.Floor((elapsedTime - Time.deltaTime) / 100))
         {
             HungerUpdate();
         }
 
-        // Check if the elapsed time is a multiple of 10 for sickChance
-        if (Math.Floor(elapsedTime / 5) > Math.Floor((elapsedTime - Time.deltaTime) / 5))
+        // If hunger is greater than 50 and the time is a multiple of 20, the dog has a chance of getting sick
+        if (dogState.HungerLevel > 50 && (Math.Floor(elapsedTime / 20) > Math.Floor((elapsedTime - Time.deltaTime) / 20)))
         {
             SickUpdate();
         }
@@ -94,12 +95,17 @@ public class DogManager : MonoBehaviour
             SleepinessUpdate();
         }
 
-        // Check if the elapsed time is a multiple of 15 for Happiness
         if (Math.Floor(elapsedTime / 5) > Math.Floor((elapsedTime - Time.deltaTime) / 5))
         {
             dogState.Happiness -= 1;
         }
+        
+        /*
+
+        // Check if the elapsed time is a multiple of 15 for Happiness
+
         //Debug.Log("Dog's happiness decreased: " + dogState.Happiness); }
+        */
 
         // Update the text of the dog's current stats
         if (statsText != null)
