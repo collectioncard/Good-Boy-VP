@@ -12,7 +12,9 @@ namespace OpenAI.ApiTemplates.Response
         public int HappinessPercentage { get; set; }
         public int HealthPercentage { get; set; }
         public int HungerPercentage { get; set; }
-        public bool IsHungry { get; set; }
+        public int SickChancePercentage { get; set; }
+        public bool IsSleeping { get; set; }
         public bool IsSick { get; set; }
+        public int TiredLevelPercentage { get; set; }
     }
 }

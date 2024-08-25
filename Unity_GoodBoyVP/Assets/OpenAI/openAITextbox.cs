@@ -9,6 +9,7 @@ namespace OpenAI
     {
         public TMP_InputField inputField;
         private OpenAIClient openAPI; 
+        public DogManager dogManager;
         
 
         private void Start()
@@ -16,6 +17,7 @@ namespace OpenAI
             openAPI = GameObject.Find("OpenAIClient").GetComponent<OpenAIClient>();
             
             inputField.onEndEdit.AddListener(OnEndEdit);
+            dogManager = GameObject.Find("HFSMObject")?.GetComponent<DogManager>();
         }
 
         async void OnEndEdit(string userInput)
@@ -24,8 +26,25 @@ namespace OpenAI
             {
                 StructuredOutput apiResponse = await openAPI.handleUserInput(userInput, "text");
                 
-                //TODO: Change the dog's state
+                //Print the dog's reaction
                 inputField.text = apiResponse.DogActionDescription;
+                
+                //TODO: figure out why the ai sends multiple states. Just use the first one
+                DogValue dogValue = apiResponse.DogValues[0];
+                DogState state = dogManager.getDogState();
+                
+                
+                state.Happiness = dogValue.HappinessPercentage;
+                state.Health = dogValue.HealthPercentage;
+                state.HungerLevel = dogValue.HungerPercentage;
+                state.SickChance = dogValue.SickChancePercentage;
+                state.TiredLevel = dogValue.TiredLevelPercentage;  
+                state.IsSleeping = dogValue.IsSleeping;
+                state.IsSick = dogValue.IsSick;
+                
+                //transition to a new state
+                dogManager.ChangeDogState(apiResponse.NewStateName);
+
             }
         }
     }

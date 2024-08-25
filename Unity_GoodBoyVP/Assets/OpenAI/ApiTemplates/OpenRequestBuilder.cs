@@ -51,7 +51,7 @@ namespace OpenAI.ApiTemplates
                     type = "json_schema",
                     json_schema = new
                     {
-                        name = "dogResponseV1",
+                        name = "dogResponseV2",
                         schema = new
                         {
                             type = "object",
@@ -66,19 +66,24 @@ namespace OpenAI.ApiTemplates
                                         type = "object",
                                         properties = new
                                         {
-                                            HungerPercentage = new { type = "integer" },
-                                            HealthPercentage = new { type = "integer" },
                                             HappinessPercentage = new { type = "integer" },
-                                            isSick = new { type = "boolean" },
-                                            isHungry = new { type = "boolean" }
+                                            HealthPercentage = new { type = "integer" },
+                                            HungerPercentage = new { type = "integer" },
+                                            SickChancePercentage = new { type = "integer" },
+                                            IsSleeping = new { type = "boolean" },
+                                            IsSick = new { type = "boolean" },
+                                            TiredLevelPercentage = new { type = "integer" }
                                         },
                                         required = new[]
                                         {
-                                            "HungerPercentage",
-                                            "HealthPercentage",
                                             "HappinessPercentage",
-                                            "isSick",
-                                            "isHungry"
+                                            "HealthPercentage",
+                                            "HungerPercentage",
+                                            "SickChancePercentage",
+                                            "IsSleeping",
+                                            "IsSick",
+                                            "TiredLevelPercentage"
+                                            
                                         },
                                         additionalProperties = false
                                     }
