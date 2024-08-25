@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using OpenAI.ApiTemplates.Response;
+﻿using OpenAI.ApiTemplates.Response;
 using TMPro;
 using UnityEngine;
 
@@ -24,7 +23,7 @@ namespace OpenAI
         {
             if (!string.IsNullOrEmpty(userInput))
             {
-                StructuredOutput apiResponse = await openAPI.handleUserInput(userInput, "text");
+                StructuredOutput apiResponse = await openAPI.handleUserInput(userInput);
                 
                 //Print the dog's reaction
                 inputField.text = apiResponse.DogActionDescription;
