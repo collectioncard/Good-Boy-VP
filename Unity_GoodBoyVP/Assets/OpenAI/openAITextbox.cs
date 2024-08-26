@@ -9,7 +9,7 @@ namespace OpenAI
         public TMP_InputField inputField;
         private OpenAIClient openAPI; 
         public DogManager dogManager;
-        
+        public UIManager uiManager;
 
         private void Start()
         {
@@ -17,6 +17,7 @@ namespace OpenAI
             
             inputField.onEndEdit.AddListener(OnEndEdit);
             dogManager = GameObject.Find("HFSMObject")?.GetComponent<DogManager>();
+            uiManager = GameObject.Find("UIManagerObject").GetComponent<UIManager>();
         }
 
         async void OnEndEdit(string userInput)
@@ -26,8 +27,10 @@ namespace OpenAI
                 StructuredOutput apiResponse = await openAPI.handleUserInput(userInput);
                 
                 //Print the dog's reaction
-                inputField.text = apiResponse.DogActionDescription;
-                
+                //inputField.text = apiResponse.DogActionDescription;
+                // Check if uiManager is assigned
+                uiManager.ChangeToNewMessage(apiResponse.DogActionDescription);
+
                 //TODO: figure out why the ai sends multiple states. Just use the first one
                 DogValue dogValue = apiResponse.DogValues;
                 DogState state = dogManager.getDogState();
