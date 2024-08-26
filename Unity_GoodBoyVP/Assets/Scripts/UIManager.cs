@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour {
     public string testMessage = "Doggo confused";
 
     void Start() {
-        if (displayImage != null && defaultSprite != null) {
+        if (displayImage != null && displayImage.sprite == null && defaultSprite != null) {
             displayImage.sprite = defaultSprite;
         }
 

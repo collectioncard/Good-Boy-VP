@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using OpenAI.ApiTemplates.Response;
+using TMPro;
 using UnityEngine;
 
 namespace OpenAI
@@ -7,6 +8,7 @@ namespace OpenAI
     {
         public TMP_InputField inputField;
         private OpenAIClient openAPI; 
+        public DogManager dogManager;
         
 
         private void Start()
@@ -14,17 +16,34 @@ namespace OpenAI
             openAPI = GameObject.Find("OpenAIClient").GetComponent<OpenAIClient>();
             
             inputField.onEndEdit.AddListener(OnEndEdit);
+            dogManager = GameObject.Find("HFSMObject")?.GetComponent<DogManager>();
         }
 
         async void OnEndEdit(string userInput)
         {
             if (!string.IsNullOrEmpty(userInput))
             {
-                string aiResult = await openAPI.handleUserInput(userInput);
-                Debug.Log("AI was sent: " + userInput + "\nAI returned: " + aiResult);
+                StructuredOutput apiResponse = await openAPI.handleUserInput(userInput);
                 
-                //TODO: Just replace the text box content with the response for now. This should eventually go to the output box.
-                inputField.text = aiResult;
+                //Print the dog's reaction
+                inputField.text = apiResponse.DogActionDescription;
+                
+                //TODO: figure out why the ai sends multiple states. Just use the first one
+                DogValue dogValue = apiResponse.DogValues;
+                DogState state = dogManager.getDogState();
+                
+                
+                state.Happiness = dogValue.HappinessPercentage;
+                state.Health = dogValue.HealthPercentage;
+                state.HungerLevel = dogValue.HungerPercentage;
+                state.SickChance = dogValue.SickChancePercentage;
+                state.TiredLevel = dogValue.TiredLevelPercentage;  
+                state.IsSleeping = dogValue.IsSleeping;
+                state.IsSick = dogValue.IsSick;
+                
+                //transition to a new state
+                dogManager.ChangeDogState(apiResponse.StateToTransition);
+
             }
         }
     }
