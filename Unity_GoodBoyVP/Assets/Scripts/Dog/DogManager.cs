@@ -273,6 +273,11 @@ public class DogManager : MonoBehaviour
         return dogState;
     }
 
+    public string getDogStateName()
+    {
+        return fsm.ActiveState.name;
+    }
+
     /**
      * Returns a string array of all valid transitions from the current state.
      *

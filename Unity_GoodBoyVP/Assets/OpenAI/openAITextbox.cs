@@ -29,7 +29,7 @@ namespace OpenAI
                 inputField.text = apiResponse.DogActionDescription;
                 
                 //TODO: figure out why the ai sends multiple states. Just use the first one
-                DogValue dogValue = apiResponse.DogValues[0];
+                DogValue dogValue = apiResponse.DogValues;
                 DogState state = dogManager.getDogState();
                 
                 
@@ -42,7 +42,7 @@ namespace OpenAI
                 state.IsSick = dogValue.IsSick;
                 
                 //transition to a new state
-                dogManager.ChangeDogState(apiResponse.NewStateName);
+                dogManager.ChangeDogState(apiResponse.StateToTransition);
 
             }
         }

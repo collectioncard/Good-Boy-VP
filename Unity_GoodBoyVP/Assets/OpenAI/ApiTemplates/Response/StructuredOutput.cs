@@ -3,8 +3,8 @@ namespace OpenAI.ApiTemplates.Response
     public class StructuredOutput
     {
         public string DogActionDescription { get; set; }
-        public DogValue[] DogValues { get; set; }
-        public string NewStateName { get; set; }
+        public DogValue DogValues { get; set; }
+        public string StateToTransition { get; set; }
     }
 
     public class DogValue

@@ -60,41 +60,36 @@ namespace OpenAI.ApiTemplates
                                 DogActionDescription = new { type = "string" },
                                 DogValues = new
                                 {
-                                    type = "array",
-                                    items = new
+                                    type = "object",
+                                    properties = new
                                     {
-                                        type = "object",
-                                        properties = new
-                                        {
-                                            HappinessPercentage = new { type = "integer" },
-                                            HealthPercentage = new { type = "integer" },
-                                            HungerPercentage = new { type = "integer" },
-                                            SickChancePercentage = new { type = "integer" },
-                                            IsSleeping = new { type = "boolean" },
-                                            IsSick = new { type = "boolean" },
-                                            TiredLevelPercentage = new { type = "integer" }
-                                        },
-                                        required = new[]
-                                        {
-                                            "HappinessPercentage",
-                                            "HealthPercentage",
-                                            "HungerPercentage",
-                                            "SickChancePercentage",
-                                            "IsSleeping",
-                                            "IsSick",
-                                            "TiredLevelPercentage"
-                                            
-                                        },
-                                        additionalProperties = false
-                                    }
+                                        HappinessPercentage = new { type = "integer" },
+                                        HealthPercentage = new { type = "integer" },
+                                        HungerPercentage = new { type = "integer" },
+                                        SickChancePercentage = new { type = "integer" },
+                                        IsSleeping = new { type = "boolean" },
+                                        IsSick = new { type = "boolean" },
+                                        TiredLevelPercentage = new { type = "integer" }
+                                    },
+                                    required = new[]
+                                    {
+                                        "HappinessPercentage",
+                                        "HealthPercentage",
+                                        "HungerPercentage",
+                                        "SickChancePercentage",
+                                        "IsSleeping",
+                                        "IsSick",
+                                        "TiredLevelPercentage"
+                                    },
+                                    additionalProperties = false
                                 },
-                                NewStateName = new { type = "string" }
+                                StateToTransition = new { type = "string" }
                             },
                             required = new[]
                             {
                                 "DogActionDescription",
                                 "DogValues",
-                                "NewStateName"
+                                "StateToTransition"
                             },
                             additionalProperties = false
                         },
