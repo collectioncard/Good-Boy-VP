@@ -77,8 +77,8 @@ public class DogManager : MonoBehaviour
         double elapsedTime = (DateTime.Now - startTime).TotalSeconds;
 
         
-        // Check if the elapsed time is a multiple of 100 for Hunger
-        if (Math.Floor(elapsedTime / 100) > Math.Floor((elapsedTime - Time.deltaTime) / 100))
+        // Check if the elapsed time is a multiple of 3 for Hunger
+        if (Math.Floor(elapsedTime / 3) > Math.Floor((elapsedTime - Time.deltaTime) / 3))
         {
             HungerUpdate();
         }
@@ -119,6 +119,9 @@ public class DogManager : MonoBehaviour
                 "isSick: " + dogState.IsSick + "\n" +
                 "isSleeping: " + dogState.IsSleeping;
         }
+
+        uiManager.UpdateStatBars(dogState);
+
     }
 
     // Method to change the sprite via UIManager
@@ -225,7 +228,7 @@ public class DogManager : MonoBehaviour
 
     private void HungerUpdate()
     {
-        dogState.HungerLevel += 10;
+        dogState.HungerLevel += 1;
         //Debug.Log("Dog's hunger increased: " + dogState.HungerLevel);
         if (dogState.HungerLevel < 0)
         {
@@ -242,7 +245,7 @@ public class DogManager : MonoBehaviour
     {
         if (dogState.IsSleeping == true)
         {
-            dogState.TiredLevel -= 15;
+            dogState.TiredLevel -= 5;
             if (dogState.TiredLevel < 0)
             {
                 dogState.TiredLevel = 0;
@@ -252,7 +255,7 @@ public class DogManager : MonoBehaviour
         }
         else
         {
-            dogState.TiredLevel += 8;
+            dogState.TiredLevel += 1;
             if (dogState.TiredLevel > 100)
             {
                 dogState.TiredLevel = 100;
