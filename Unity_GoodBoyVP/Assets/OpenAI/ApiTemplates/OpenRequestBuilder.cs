@@ -12,10 +12,7 @@ namespace OpenAI.ApiTemplates
             messages.Add(new Message
             {
                 role = "system",
-                content = new[]
-                {
-                    new { type = "text", messageContent }
-                }
+                content = messageContent
             });
 
             return this;
@@ -26,10 +23,7 @@ namespace OpenAI.ApiTemplates
             messages.Add(new Message
             {
                 role = "user",
-                content = new[]
-                {
-                    new { type = "text", messageContent }
-                }
+                content = messageContent
             });
 
             return this;
@@ -41,11 +35,11 @@ namespace OpenAI.ApiTemplates
             {
                 model = "gpt-4o-mini",
                 messages = messages,
-                temperature = 1,
+                temperature = 1.0,
                 max_tokens = 256,
-                top_p = 1,
-                frequency_penalty = 0,
-                presence_penalty = 0,
+                top_p = 1.0,
+                frequency_penalty = 0.0,
+                presence_penalty = 0.0,
                 response_format = new
                 {
                     type = "json_schema",
@@ -104,6 +98,6 @@ namespace OpenAI.ApiTemplates
     public class Message
     {
         public string role { get; set; }
-        public object[] content { get; set; }
+        public string content { get; set; }
     }
 }
