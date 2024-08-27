@@ -83,7 +83,7 @@ public class DogManager : MonoBehaviour
         }
 
         // Check if the time is a multiple of 20, the dog has a chance of getting sick
-        if (Math.Floor(elapsedTime / 10) > Math.Floor((elapsedTime - Time.deltaTime) / 10))
+        if (Math.Floor(elapsedTime / 20) > Math.Floor((elapsedTime - Time.deltaTime) / 20))
         {
             SickUpdate();
         }
