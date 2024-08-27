@@ -78,13 +78,12 @@ public class DogManager : MonoBehaviour
 
         
         // Check if the elapsed time is a multiple of 3 for Hunger
-        if (Math.Floor(elapsedTime / 3) > Math.Floor((elapsedTime - Time.deltaTime) / 3))
-        {
+        if (Math.Floor(elapsedTime / 3) > Math.Floor((elapsedTime - Time.deltaTime) / 3)) {
             HungerUpdate();
         }
 
-        // If hunger is greater than 50 and the time is a multiple of 20, the dog has a chance of getting sick
-        if (dogState.HungerLevel > 50 && (Math.Floor(elapsedTime / 20) > Math.Floor((elapsedTime - Time.deltaTime) / 20)))
+        // Check if the time is a multiple of 20, the dog has a chance of getting sick
+        if (Math.Floor(elapsedTime / 10) > Math.Floor((elapsedTime - Time.deltaTime) / 10))
         {
             SickUpdate();
         }
@@ -95,7 +94,7 @@ public class DogManager : MonoBehaviour
             SleepinessUpdate();
         }
 
-        if (Math.Floor(elapsedTime / 5) > Math.Floor((elapsedTime - Time.deltaTime) / 5))
+        if (Math.Floor(elapsedTime / 7) > Math.Floor((elapsedTime - Time.deltaTime) / 7))
         {
             dogState.Happiness -= 1;
         }
@@ -191,14 +190,14 @@ public class DogManager : MonoBehaviour
         {
             dogState.SickChance += 1;
 
-            if (dogState.HungerLevel >= 75)
+            if (dogState.HungerLevel >= 50)
             {
-                dogState.SickChance += 10;
+                dogState.SickChance += 3;
             }
 
             if (dogState.Happiness <= 50)
             {
-                dogState.SickChance += 1;
+                dogState.SickChance += 3;
             }
 
             if (dogState.SickChance > 100)
@@ -209,7 +208,7 @@ public class DogManager : MonoBehaviour
             CheckIfDogGetsSick();
 
             // Only increase health if the dog is not sick and not too hungry
-            if (dogState.Health < 100 && dogState.HungerLevel < 75)
+            if (dogState.Health < 100 && dogState.HungerLevel <= 60)
             {
                 dogState.Health += 1;
             }
