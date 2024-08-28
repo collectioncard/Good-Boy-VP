@@ -31,6 +31,16 @@ public class MusicManager : MonoBehaviour
         {
             playButtonText = playButton.GetComponentInChildren<TextMeshProUGUI>();
         }
+
+        if (playButton == null)
+        {
+            Debug.Log("Play button not connected");
+        }
+        if (nextButton == null)
+        {
+            Debug.Log("next button not connected");
+        }
+
     }
 
     void Update()
@@ -44,6 +54,7 @@ public class MusicManager : MonoBehaviour
 
     public void TogglePlayPause()
     {
+        Debug.Log("Working?");
         if (audioSource.isPlaying)
         {
             isPaused = true;
