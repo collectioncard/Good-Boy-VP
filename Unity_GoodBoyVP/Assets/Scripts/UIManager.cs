@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour {
     public Slider tiredSlider;
     public Slider sickSlider;
 
+    public MusicManager musicManager;
+
     void Start() {
         if (displayImage != null && displayImage.sprite == null && defaultSprite != null) {
             displayImage.sprite = defaultSprite;
@@ -31,6 +33,9 @@ public class UIManager : MonoBehaviour {
         happySlider = GameObject.Find("HappySlider")?.GetComponent<Slider>();
         tiredSlider = GameObject.Find("TiredSlider")?.GetComponent<Slider>();
         sickSlider = GameObject.Find("SickSlider")?.GetComponent<Slider>();
+
+        musicManager.playButton.onClick.AddListener(musicManager.TogglePlayPause);
+        musicManager.nextButton.onClick.AddListener(musicManager.NextTrack);
     }
 
     public void ChangeToNewImage(Sprite newSprite) {
