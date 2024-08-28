@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 public class ScrollImage : MonoBehaviour
 {
     public float speed;
     
     [SerializeField]
-    private Renderer background;
+    private Image background;
     
     void Update()
     {

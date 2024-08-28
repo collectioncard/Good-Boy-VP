@@ -1690,6 +1690,7 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &1001115103
+--- !u!224 &981825282
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2594,6 +2595,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 981825282}
   - {fileID: 2117614834}
   - {fileID: 1103590585}
   - {fileID: 1771195213}
