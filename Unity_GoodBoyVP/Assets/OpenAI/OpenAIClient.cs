@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,10 +45,24 @@ namespace OpenAI
          //convert the response back into an object
          ActionResponseTemplate apiResponse = new ActionResponseTemplate();
 
-         apiResponse = JsonUtility.FromJson<ActionResponseTemplate>(responseString);
-         string messageContent = apiResponse.choices[0].message.content;
 
-         return JsonConvert.DeserializeObject<StructuredOutput>(messageContent);
+         try
+         {
+            apiResponse = JsonUtility.FromJson<ActionResponseTemplate>(responseString);
+            string messageContent = apiResponse.choices[0].message.content;
+            return JsonConvert.DeserializeObject<StructuredOutput>(messageContent);
+         }
+         catch (Exception e)
+         {
+            Debug.LogError("Error deserializing JSON response. Does the OpenAPI Key exist? Error: " + e.Message);
+            return new StructuredOutput()
+            {
+               DogActionDescription = "An error occurred while processing the user input. The dog is very sad. :("
+            };
+         }
+
+
+
       }
 
       private static string getDogStatusString(DogManager dogManager)
