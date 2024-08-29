@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityHFSM;
 using System;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 /* 
 DOG MANAGER CLASS PURPOSE: manage the overall logic for the dog
@@ -121,6 +122,10 @@ public class DogManager : MonoBehaviour
 
         uiManager.UpdateStatBars(dogState);
 
+        dogState.Health--;
+        if (dogState.Health <= 0) {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 
     // Method to change the sprite via UIManager
