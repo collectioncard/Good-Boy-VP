@@ -122,7 +122,7 @@ public class DogManager : MonoBehaviour
 
         uiManager.UpdateStatBars(dogState);
 
-        dogState.Health--;
+        //dogState.Health--;
         if (dogState.Health <= 0) {
             SceneManager.LoadScene("GameOver");
         }
